@@ -12,7 +12,7 @@ function console_log($output, $with_script_tags = true)
 
 include_once "index.html";
 
-console_log($_SERVER);
+console_log($_GET);
 
 // echo ("request uri\n" . $_SERVER['REQUEST_URI']);
 
