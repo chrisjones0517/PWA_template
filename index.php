@@ -10,18 +10,14 @@ function console_log($output, $with_script_tags = true)
     echo $js_code;
 }
 
-include_once "index.html";
-
 console_log($_SERVER['HTTP_X_FORWARDED_PROTO']);
 
-// echo ("request uri\n" . $_SERVER['REQUEST_URI']);
+if ($_SERVER['HTTP_X_FORWARDED_PROTO'] != "https") {
 
-// if ($_SERVER["HTTPS"] != "on") {
+    $redirect = "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+    header("Location:$redirect");
 
-//     $redirect = "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-//     header("Location:$redirect");
-
-//     exit;
-// } else {
-//     include_once "index.html";
-// }
+    exit;
+} else {
+    include_once "index.html";
+}
