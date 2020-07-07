@@ -1,1 +1,16 @@
-{}
+{
+    "name": "chris/food_ninja",
+    "description": "PWA test",
+    "authors": [
+        {
+            "name": "Chris",
+            "email": "chrisjones0517@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "//": "/"
+        }
+    },
+    "require": {}
+}
