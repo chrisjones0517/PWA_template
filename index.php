@@ -1,5 +1,4 @@
 <?php
-include_once "index.html";
 
 if ($_SERVER["HTTPS"] != "on") {
 
@@ -7,4 +6,6 @@ if ($_SERVER["HTTPS"] != "on") {
     header("Location:$redirect");
 
     exit;
+} else {
+    include_once "index.html";
 }
