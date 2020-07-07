@@ -1,7 +1,9 @@
 <?php
 
+echo ("request uri\n" . $_SERVER['REQUEST_URI']);
+
 if ($_SERVER["HTTPS"] != "on") {
-    echo ("server\n" . $_SERVER);
+
     $redirect = "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     header("Location:$redirect");
 
