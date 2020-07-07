@@ -1,5 +1,6 @@
 <?php
 include_once "index.html";
+echo ("my fucking echo worked");
 echo ("request uri\n" . $_SERVER['REQUEST_URI']);
 
 // if ($_SERVER["HTTPS"] != "on") {
