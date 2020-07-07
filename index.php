@@ -1,7 +1,20 @@
 <?php
+
+function console_log($output, $with_script_tags = true)
+{
+    $js_code = 'console.log(' . json_encode($output, JSON_HEX_TAG) . ');';
+
+    if ($with_script_tags) {
+        $js_code = '<script>' . $js_code . '</script>';
+    }
+    echo $js_code;
+}
+
 include_once "index.html";
-echo ("\n\n\n\nmy fucking echo worked\n\n\n\n");
-echo ("request uri\n" . $_SERVER['REQUEST_URI']);
+
+console_log('my log worked');
+
+// echo ("request uri\n" . $_SERVER['REQUEST_URI']);
 
 // if ($_SERVER["HTTPS"] != "on") {
 
