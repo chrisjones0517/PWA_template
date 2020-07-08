@@ -55,30 +55,31 @@ self.addEventListener('activate', evt => {
 
 // fetch event
 self.addEventListener('fetch', evt => {
+    if (evt.request.url.indexOf('firestore.googleapis.com') === -1) {
+        evt.respondWith(
+            (async () => {
 
-    evt.respondWith(
-        (async () => {
+                try {
 
-            try {
+                    const cachedResponse = await caches.match(evt.request);
 
-                const cachedResponse = await caches.match(evt.request);
+                    if (cachedResponse) {
+                        return cachedResponse;
+                    }
 
-                if (cachedResponse) {
-                    return cachedResponse;
+                    const serverResponse = await fetch(evt.request);
+                    const cache = await caches.open(dynamicCacheName);
+                    await cache.put(evt.request.url, serverResponse.clone());
+                    limitCacheSize(dynamicCacheName, 15);
+                    return serverResponse;
+
+                } catch {
+
+                    if (evt.request.url.indexOf('.html') !== -1) {
+                        return caches.match('/pages/fallback.html');
+                    }
+                    // optionally add check for image resources and other file types for different offline behavior
                 }
-
-                const serverResponse = await fetch(evt.request);
-                const cache = await caches.open(dynamicCacheName);
-                await cache.put(evt.request.url, serverResponse.clone());
-                limitCacheSize(dynamicCacheName, 15);
-                return serverResponse;
-
-            } catch {
-
-                if (evt.request.url.indexOf('.html') !== -1) {
-                    return caches.match('/pages/fallback.html');
-                }
-                // optionally add check for image resources and other file types for different offline behavior
-            }
-        })());
+            })());
+    }
 });
